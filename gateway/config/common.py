@@ -23,6 +23,7 @@ class Common(Configuration):
         'django_filters',            # for filtering rest endpoints,
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
+        'rest_framework_swagger',    # Open API generators
 
         # Cornershop apps
         'cornershop.apps.users',
@@ -99,6 +100,9 @@ class Common(Configuration):
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
                 ],
+                'libraries': {
+                    'staticfiles': 'django.templatetags.static',
+                },
             },
         },
     ]
@@ -188,11 +192,14 @@ class Common(Configuration):
 
     # Django REST Framework
     REST_FRAMEWORK = {
-        'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S%z',
+        'DATETIME_FORMAT': ('%Y-%m-%d', '%Y-%m-%dT%H:%M:%S%z'),
         'DEFAULT_AUTHENTICATION_CLASSES': (
             'rest_framework.authentication.SessionAuthentication',
             'rest_framework.authentication.TokenAuthentication',
         ),
+        'DEFAULT_FILTER_BACKENDS': [
+            'django_filters.rest_framework.DjangoFilterBackend'
+        ],
         'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAuthenticated',
@@ -201,5 +208,7 @@ class Common(Configuration):
             'rest_framework.renderers.JSONRenderer',
             'rest_framework.renderers.BrowsableAPIRenderer',
         ),
+        'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
         'PAGE_SIZE': int(os.getenv('DJANGO_PAGINATION_LIMIT', 10)),
+        'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     }
