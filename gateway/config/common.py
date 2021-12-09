@@ -27,6 +27,7 @@ class Common(Configuration):
 
         # Cornershop apps
         'cornershop.apps.users',
+        'cornershop.apps.weather',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/

@@ -10,11 +10,12 @@ from rest_framework.authtoken import views
 from rest_framework_swagger.views import get_swagger_view
 
 from cornershop.apps.users.views import UserCreateViewSet, UserViewSet
-
+from cornershop.apps.weather.views import WeatherViewSet
 
 router = DefaultRouter(trailing_slash=True)
 router.register(r'users', UserViewSet)
 router.register(r'users', UserCreateViewSet)
+router.register(r'weather', WeatherViewSet)
 
 endpoints_patterns = [
     path('api/v1/', include(router.urls)),
