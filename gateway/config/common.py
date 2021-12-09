@@ -23,6 +23,9 @@ class Common(Configuration):
         'django_filters',            # for filtering rest endpoints,
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
+
+        # Cornershop apps
+        'cornershop.apps.users',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
@@ -120,6 +123,9 @@ class Common(Configuration):
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         },
     ]
+
+    # Cornershop API User
+    AUTH_USER_MODEL = 'users.User'
 
     # Logging
     LOGGING = {
