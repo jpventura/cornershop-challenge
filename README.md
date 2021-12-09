@@ -1,39 +1,103 @@
-<h1 align="center">GitHub Project Template</h1>
+# Cornershop Weather API
 
-<p align="center">
-  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github-logo" width="120px" height="120px"/>
-  <br>
-  <i>GitHub template to spawn applications git repositories
-    <br> using programming languages.</i>
-  <br>
-</p>
+[![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)
 
-<p align="center">
-  <a href="https://www.jpventura.com"><strong>www.jpventura.com</strong></a>
-  <br>
-</p>
+| **YouTube: Enterprise Level APIs** | **YouTube: RESTful APIs vs GrapQL** |
+|------|----------|
+| [![Enterprise Level APIs](./docs/jobsity-rest.png)](https://www.youtube.com/watch?v=XkOR2eHiD1s) | [![RESTful APIs vs GrapQL](./docs/jobsity-graphql.png)](https://www.youtube.com/watch?v=XkOR2eHiD1s) |
 
-<p align="center">
-  <a href="CONTRIBUTING.md">Contributing Guidelines</a>
-  ·
-  <a href="https://github.com/jpventura/template/issues">Submit an Issue</a>
-  ·
-  <a href="https://blog.jpventura.com/">Blog</a>
-  <br>
-  <br>
-</p>
 
-<p align="center">
-  <a href="https://www.npmjs.com/@angular/core">
-    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="Apache 2.0 License" />
-  </a>&nbsp;
-  <a href="https://circleci.com/gh/jpventura/workflows/template/tree/master">
-    <img src="https://img.shields.io/circleci/build/github/jpventura/template/master.svg?logo=circleci&logoColor=fff&label=CircleCI" alt="CI status" />
-  </a>&nbsp;
-</p>
+The motivation is present a more elegant solution to refactoring monolithic (or several microservices) RESTful APIs using GraphQL as a facade.
 
-## [Changelog](docs/CHANGELOG.md)
-Require to setup a predefined changelog script using the project main language.
+The application is already deployed on [Google Appengine](https://weather-app-7019.uc.r.appspot.com/) with two graphical interfaces:
 
-## [Contributing](docs/CONTRIBUTING.md)
-Require setup a license and CLA action at GitHub.
+  - [GraphQL](https://weather-app-7019.uc.r.appspot.com/graphiql)
+  - [Open API 3.0](https://weather-app-7019.uc.r.appspot.com/docs/)
+
+# Architecture
+
+The project was created using [Cookiecutter CLI][cookiecutter-url] and [Django RESTful Framework][cookiecutter-drf-url] and is structured as follows:
+
+    cornershop
+    ├── .env                     # Environment variables
+    ├── cornershop               # Django reusable apps
+    │   └── apps
+    │       └── ...
+    ├── gateway                  # Django project directory
+    │   ├── config
+    │   │   ├── common.py        # All environment common configuration
+    │   │   ├── local.py         # Local only environment configuration
+    │   │   └── production.py    # Production only environment configuration
+    │   ├── urls.py              # API Gateway routes
+    │   └── wsgi.py
+    ├── deploy                   # Docker, Kubernetes, GCP, etc.
+    └── manage.py
+
+The motivations is create [Django reusable apps][django-apps-url] that are pluged into the `gateway` project, allowing the engineers to:
+
+  - [Split the submodules into new repositories][github-split-url] when the engineering team becomes larger.
+  - Work [git submodules][github-submodules-url] and choose the installed apps by semantic version.
+  - Re-scale only choosed apps instead the whole monolith, since they may be pluged into separated instances.
+
+Thus the `gateway` project is literaly a _gateway_ (or facade), that just join multiple apps.
+
+# GraphQL
+
+If you are not familiar with GraphQL, just open the [graphical interface](https://weather-app-7019.uc.r.appspot.com/graphiql) and start typing.
+
+For example:
+
+```graphql
+{
+  weathers {
+    edges {
+      node {
+        city,
+        temperatures {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+# Code is the documentation
+
+![tig](./docs/tig.png)
+
+We use git exhaustively, not only as a code versioning system, **but also as for documentation** through [conventional commit messages][semantic-commit-url].
+
+So feel free to use your favorit [Git toolkit][tig-url] to learn why things were done the way they are.
+
+# Automatic code generation
+
+For automatically creating all Spring Boot base structure, just use [Swagger Codegen CLI][swagger-codegen-url]:
+
+```bash
+swagger-codegen generate \
+    -i https://cornershop.uber.com/api/v1/swagger.json \    # Open API specification (not deployed)
+    -l spring \                                             # Backend Framework (Spring, Ktor, Quarkus, etc)
+    -o /tmp/cornershop                                      # Output pathname
+```
+
+or to produce a client library artifact:
+
+```bash
+swagger-codegen generate \
+    -i https://cornershop.uber.com/api/v1/swagger.json \    # Open API specification (not deployed)
+    -l android \                                            # Client language (Android, iOS, React, etc)
+    -o /tmp/cornershop                                      # Output pathname
+```
+
+[cookiecutter-url]: https://github.com/cookiecutter/cookiecutter
+[cookiecutter-drf-url]: http://agconti.github.io/cookiecutter-django-rest/
+[django-apps-url]: https://realpython.com/installable-django-app/
+[github-split-url]: https://docs.github.com/en/get-started/using-git/splitting-a-subfolder-out-into-a-new-repository
+[github-submodules-url]: https://github.blog/2016-02-01-working-with-submodules/
+[semantic-commit-url]: https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines
+[swagger-codegen-url]: https://github.com/swagger-api/swagger-codegen
+[tig-url]: http://jonas.github.io/tig/
+[youtube-rest-img]: https://i.ytimg.com/vi/XkOR2eHiD1s/maxresdefault.jpg?v=6086ecae
+[youtube-rest-url]: https://i.ytimg.com/vi/XkOR2eHiD1s/maxresdefault.jpg?v=6086ecae
+[youtube-graphql-url]: https://www.youtube.com/watch?v=pL9f_3nbze8
