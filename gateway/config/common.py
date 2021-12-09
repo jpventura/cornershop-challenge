@@ -8,7 +8,7 @@ from configurations import Configuration
 
 class Common(Configuration):
 
-    BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
+    BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -68,17 +68,20 @@ class Common(Configuration):
     LOGIN_REDIRECT_URL = '/'
 
     # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/2.0/howto/static-files/
-    STATIC_ROOT = path.normpath(path.join(path.dirname(BASE_DIR), 'static'))
+    # https://docs.djangoproject.com/en/3.2/howto/static-files/
+    STATIC_ROOT = path.normpath(path.join(BASE_DIR, 'static'))
+
     STATICFILES_DIRS = []
+
     STATIC_URL = '/static/'
+
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.FileSystemFinder',
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     )
 
     # Media files
-    MEDIA_ROOT = path.join(path.dirname(BASE_DIR), 'media')
+    MEDIA_ROOT = path.normpath(path.join(BASE_DIR, 'media'))
     MEDIA_URL = '/media/'
 
     TEMPLATES = [
@@ -117,9 +120,6 @@ class Common(Configuration):
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         },
     ]
-
-    # Cornershop API User
-    AUTH_USER_MODEL = 'cornershop.apps.users.User'
 
     # Logging
     LOGGING = {
