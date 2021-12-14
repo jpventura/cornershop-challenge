@@ -21,6 +21,7 @@ class Common(Configuration):
 
         # Third party apps
         'django_filters',            # for filtering rest endpoints,
+        'graphene_django',           # Graphene GraphQL
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'rest_framework_swagger',    # Open API generators
@@ -189,6 +190,19 @@ class Common(Configuration):
                 'level': 'INFO'
             },
         }
+    }
+
+    # Graphene GraphQL
+    GRAPHENE = {
+        'SCHEMA': 'gateway.schemas.schema'
+    }
+
+    GRAPHENE_DJANGO_EXTRAS = {
+        'CACHE_ACTIVE': True,
+        'CACHE_TIMEOUT': 300,
+        'DEFAULT_PAGE_SIZE': 20,
+        'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.LimitOffsetGraphqlPagination',
+        'MAX_PAGE_SIZE': 50,
     }
 
     # Django REST Framework

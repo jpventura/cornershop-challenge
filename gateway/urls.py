@@ -5,6 +5,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 
+from graphene_django.views import GraphQLView
+
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from rest_framework_swagger.views import get_swagger_view
@@ -32,6 +34,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    # GraphQL
+    url(r'^graphql$', GraphQLView.as_view(graphiql=False)),
+    url(r'^graphiql$', GraphQLView.as_view(graphiql=True)),
 
     # Open API 3.x Schema
     path('docs/', schema_view, name='swagger'),
