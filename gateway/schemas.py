@@ -1,7 +1,9 @@
 import graphene
 
+from cornershop.apps.weather.schemas import WeatherQuery
 
-class Query(graphene.ObjectType):
+
+class Query(WeatherQuery):
     pass
 
 
