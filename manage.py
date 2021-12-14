@@ -3,10 +3,26 @@
 import os
 import sys
 
+from os import path
+from dotenv import dotenv_values
 
-def main():
+
+def load_django_dotenv():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gateway.config")
     os.environ.setdefault("DJANGO_CONFIGURATION", "Local")
+
+    dotenv_path = ('.env.%(DJANGO_CONFIGURATION)s' % os.environ).lower()
+
+    if not path.isfile(dotenv_path):
+        dotenv_path = '.env'
+
+    os.environ.update(dotenv_values(dotenv_path))
+
+    return os.environ
+
+
+def main():
+    load_django_dotenv()
 
     try:
         from configurations.management import execute_from_command_line
