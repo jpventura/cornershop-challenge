@@ -20,6 +20,7 @@ class Common(Configuration):
 
 
         # Third party apps
+        'corsheaders',               # Allow CORS for Open API
         'django_filters',            # for filtering rest endpoints,
         'graphene_django',           # Graphene GraphQL
         'rest_framework',            # utilities for rest apis
@@ -33,6 +34,7 @@ class Common(Configuration):
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
     MIDDLEWARE = (
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -43,6 +45,12 @@ class Common(Configuration):
     )
 
     ALLOWED_HOSTS = ['*']
+
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOW_CREDENTIALS = True
+
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
     ROOT_URLCONF = 'gateway.urls'
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
     WSGI_APPLICATION = 'gateway.wsgi.application'
