@@ -4,7 +4,7 @@
 
 | **YouTube: Enterprise Level APIs** | **YouTube: RESTful APIs vs GrapQL** |
 |------|----------|
-| [![Enterprise Level APIs](./docs/jobsity-rest.png)](https://www.youtube.com/watch?v=XkOR2eHiD1s) | [![RESTful APIs vs GrapQL](./docs/jobsity-graphql.png)](https://www.youtube.com/watch?v=XkOR2eHiD1s) |
+| [![Enterprise Level APIs](./docs/jobsity-rest.png)](https://www.youtube.com/watch?v=XkOR2eHiD1s) | [![RESTful APIs vs GrapQL](./docs/jobsity-graphql.png)][youtube-graphql-url] |
 
 
 The motivation is present a more elegant solution to refactoring monolithic (or several microservices) RESTful APIs using GraphQL as a facade.
@@ -100,4 +100,4 @@ swagger-codegen generate \
 [tig-url]: http://jonas.github.io/tig/
 [youtube-rest-img]: https://i.ytimg.com/vi/XkOR2eHiD1s/maxresdefault.jpg?v=6086ecae
 [youtube-rest-url]: https://i.ytimg.com/vi/XkOR2eHiD1s/maxresdefault.jpg?v=6086ecae
-[youtube-graphql-url]: https://www.youtube.com/watch?v=pL9f_3nbze8
+[youtube-graphql-url]: https://www.youtube.com/live/pL9f_3nbze8?si=birv6i8Rzk2PhboJ
